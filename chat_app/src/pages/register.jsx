@@ -1,20 +1,26 @@
 import React from 'react'
+import avatar from '../img/avatar.jpg'
+import falcon from '../img/falcon.png'
 
 export const Register = () => {
   return (
     <div className='formContainer'>
         <div className='formWrapper'>
-            <span className='logo'><img src='../chat_logo.jpg' alt='logo'></img></span>
+            <img src={falcon} alt='logo'></img>
             <h2 className='register'>Register</h2>
 
             <form>
                 <input type='text' placeholder='Name'/>
                 <input type='email' placeholder='Email'/>
                 <input type='password' placeholder='Password'/>
-                <input type='file' />
+                <input style={{display:'none'}} type='file' id='file'/>
+                <label htmlFor="file">
+                  <img src={avatar} alt='icon'></img>
+                  <span>Add Avatar</span>
+                </label>
                 <button type='submit'>Register</button>
             </form>
-            <p>Already Have An Account? Login </p>
+            <p>Already have an Account? <i>Login</i></p>
         </div>
     </div>
   )
