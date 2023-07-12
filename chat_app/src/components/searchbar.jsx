@@ -4,10 +4,10 @@ import popi from '../img/popi.jpg'
 const Searchbar = () => {
   return (
     <div className='searchbar'>
-      <form className='searchForm'>
+      <div className='searchForm'>
         <input type='text' placeholder='Search User' />
-      </form>
-      <div className='userSearched'>
+      </div>
+      <div  style={{display:'none'}} className='userSearched'>
         <img src={popi} alt="dp" />
         <span>Ashish Verma</span>
       </div>

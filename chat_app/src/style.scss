@@ -102,7 +102,6 @@
             justify-content: center;
 
             .navbar{
-                // border: 1px solid black;
                 border-top-left-radius: 40px;
                 background-color: mintcream;
                 flex: 1;
@@ -110,6 +109,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-evenly;
+                border-bottom:2px solid black ;
 
                 .favicon{
                     flex: 1;
@@ -145,6 +145,7 @@
                         font-weight: bold;
                         margin-left: 5%;
                         background-color: wheat;
+                        padding: 2%;
                     }
                 }
 
@@ -158,53 +159,68 @@
                     border: none;
                 }
             }
-            
-            .chats{
-                // border: 1px solid black;
-                flex: 10;
-                width: 100%;
-                border-top: 2px solid black;
-                background-color: mintcream;
-            }
 
             .searchbar{
-                border-top: 2px solid black;
+                border-bottom: 2px solid black;
                 background-color: mintcream;
-                border-bottom-left-radius: 40px;
-                flex: 1;
                 width: 100%;
 
-                .searchform{
-                    width: 100%;
+                .searchForm{
+                    padding: 10px;
                     
                     input{
                         width: 100%;
-                    }
-                }
-
-                .userSearched{
-                    
-                    margin: 2%;
-                    display: flex;
-                    align-items: center;
-                    border: 5px solid wheat;
-                    border-radius: 10px;
-
-                    img{
-                        width:10%;
-                        height: 10%;
-                        border-radius: 30%;
-                        margin: 1%;
-                    }
-
-                    span{
-                        // border: 1px solid black;
-                        margin-left: 4%;
-                        letter-spacing: 1.5px;
                         font-size: 20px;
-                        font-weight: 800;
+                        background-color: transparent;
+                        border: none;
+                        color:black;
+                        outline: none;
+
+                        &::placeholder{
+                            color: black;
+                        }
                     }
                 }
+
+                
+            }
+
+            .userSearched{
+                margin: 2%;
+                display: flex;
+                align-items: center;
+                border: 5px solid wheat;
+                border-radius: 10px;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: wheat;
+                }
+
+                img{
+                    width:10%;
+                    height: 10%;
+                    border-radius: 30%;
+                    margin: 1%;
+                }
+
+                span{
+                    padding: 1% 2%;
+                    background-color: wheat;
+                    border-radius: 5px;
+                    margin-left: 3%;
+                    letter-spacing: 1px;
+                    font-size: 18px;
+                    font-weight: 800;
+                }
+            }
+            
+            .chats{
+                border-bottom-left-radius: 40px;
+                flex: 10;
+                width: 100%;
+                // border-top: 2px solid black;
+                background-color: mintcream;
             }
         }
 
