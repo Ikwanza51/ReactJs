@@ -1,7 +1,14 @@
 import React from 'react'
+import { Chatbox } from '../components/chatbox'
+import { Sidebar } from '../components/sidebar'
 
 export const Home = () => {
   return (
-    <div>home</div>
+    <div className='homeContainer'>
+      <div className='homeWrapper'>
+        <Sidebar />
+        <Chatbox/>
+      </div>
+    </div>
   )
 }
