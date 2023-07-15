@@ -11,6 +11,62 @@ const Chats = () => {
           <p>Hello Venika</p>
         </div>
       </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
+      <div  className='userSearched'>
+        <img src={popi} alt="dp" />
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+          <p>Hello Venika</p>
+        </div>
+      </div>
     </div>
   )
 }
