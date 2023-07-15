@@ -204,22 +204,29 @@
                     margin: 1%;
                 }
 
-                span{
-                    padding: 1% 2%;
-                    background-color: wheat;
-                    border-radius: 5px;
+                .userChatinfo{
                     margin-left: 3%;
-                    letter-spacing: 1px;
-                    font-size: 18px;
-                    font-weight: 800;
+                    margin-top: 3%;
+                    
+
+                    span{
+                        font-size: 20px;
+                        font-weight: 800;
+                    }
+                    
+                    p{
+                        margin-top: 1%;
+                        font-size: 14px;
+                        margin-left: 10%;
+                    }
                 }
+
             }
             
             .chats{
                 border-bottom-left-radius: 40px;
                 flex: 10;
                 width: 100%;
-                // border-top: 2px solid black;
                 background-color: mintcream;
             }
         }

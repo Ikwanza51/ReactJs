@@ -9,7 +9,9 @@ const Searchbar = () => {
       </div>
       <div  style={{display:'none'}} className='userSearched'>
         <img src={popi} alt="dp" />
-        <span>Ashish Verma</span>
+        <div className='userChatinfo'>
+          <span>Ashish Verma</span>
+        </div>
       </div>
     </div>
   )
