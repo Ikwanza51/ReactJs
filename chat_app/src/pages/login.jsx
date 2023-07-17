@@ -1,5 +1,6 @@
 import React from 'react'
 import falcon from '../img/falcon.png'
+import { NavLink } from 'react-router-dom'
 
 export const Login = () => {
   return (
@@ -13,7 +14,7 @@ export const Login = () => {
                 <input type='password' placeholder='Password'/>
                 <button type='submit'>Login</button>
             </form>
-            <p>Don't have an Account? <i>Register</i></p>
+            <p>Don't have an Account? <i><NavLink to='/register'>Register</NavLink></i></p>
         </div>
     </div>
   )
