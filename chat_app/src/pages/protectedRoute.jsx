@@ -5,6 +5,7 @@ import { Navigate } from 'react-router';
 export const ProtectedRoute = ({children}) => {
     const { currentUser } = useContext(authContext);
 
-    if(!currentUser) return <Navigate to="/login" />;
+    if(currentUser==={}) return <Navigate to="/login" />;
+    
     return children;
 }

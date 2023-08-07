@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import avatar from "../img/avatar.jpg";
 import falcon from "../img/falcon.png";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { storage, db } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -10,6 +10,8 @@ import { authContext } from "../context/authContex";
 export const Register = () => {
   const navigate = useNavigate();
   const { currentUser, creatingUser, updatingUser } = useContext(authContext);
+  console.log(currentUser);
+  if(!currentUser==={}) navigate('/');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ export const Register = () => {
     const file = e.target[3].files[0];
 
     try {
-      await creatingUser(email, password);
+      const response = await creatingUser(email, password);
       console.log("Account Created Successfully");
       console.log(currentUser);
 
@@ -47,12 +49,12 @@ export const Register = () => {
             await updatingUser(name, downloadURL);
             console.log("User updated successfully");
 
-            const userRef = doc(db, "users", currentUser.uid);
+            const userRef = doc(db, "users", response.user.uid);
             await setDoc(userRef, {
-              displayName: currentUser.displayName,
-              email: currentUser.email,
-              photoURL: currentUser.photoURL,
-              uid: currentUser.uid,
+              displayName: response.user.displayName,
+              email: response.user.email,
+              photoURL: response.user.photoURL,
+              uid: response.user.uid,
             });
             console.log("Account Stored In Database");
             navigate("/");
@@ -64,7 +66,7 @@ export const Register = () => {
     }
   };
 
-  if(currentUser==={}) return (
+  return (
     <div className="formContainer">
       <div className="formWrapper">
         <img src={falcon} alt="logo"></img>
@@ -90,5 +92,4 @@ export const Register = () => {
       </div>
     </div>
   );
-  return <Navigate to='/' />;
 };

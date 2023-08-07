@@ -1,19 +1,19 @@
 import React, { useContext } from "react";
 import falcon from "../img/falcon.png";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../context/authContex";
 
 export const Login = () => {
-  const navigate = useNavigate();
   const { currentUser, loggingIn } = useContext(authContext);
+  const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    console.log(email + " " + password);
 
     try {
+    console.log(email + " " + password);
       await loggingIn(email, password);
       console.log("Login successful");
       console.log(currentUser);
@@ -23,7 +23,7 @@ export const Login = () => {
     }
   };
   
-  if(currentUser==={}) return (
+  return (
     <div className="formContainer">
       <div className="formWrapper">
         <img src={falcon} alt="logo"></img>
@@ -43,6 +43,4 @@ export const Login = () => {
       </div>
     </div>
   );
-  
-  return <Navigate to='/' />;
 };

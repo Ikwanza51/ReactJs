@@ -6,6 +6,7 @@ import { Navigate } from "react-router";
 
 export const Home = () => {
   const {currentUser} = useContext(authContext);
+  
   if(currentUser==={}) return <Navigate to='/login' />;
   return (
     <div className="homeContainer">

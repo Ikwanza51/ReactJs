@@ -12,6 +12,7 @@ export const authContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
+  // const [changed, setChanged] = useState(false);
 
   const creatingUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -44,7 +45,7 @@ export const AuthContextProvider = ({ children }) => {
     return () => {
       authstate();
     };
-  }, []);
+  });
 
   return (
     <authContext.Provider
