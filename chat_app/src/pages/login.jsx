@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import falcon from "../img/falcon.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../context/authContex";
@@ -6,6 +6,13 @@ import { authContext } from "../context/authContex";
 export const Login = () => {
   const { currentUser, loggingIn } = useContext(authContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(currentUser){
+      alert("Already logged in");
+      navigate("/");
+    }
+  },[currentUser]);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,10 +20,9 @@ export const Login = () => {
     const password = e.target[1].value;
 
     try {
-    console.log(email + " " + password);
       await loggingIn(email, password);
       console.log("Login successful");
-      console.log(currentUser);
+      // console.log(currentUser);
       navigate("/");
     } catch (error) {
       console.log("Error Signing In");

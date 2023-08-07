@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import avatar from "../img/avatar.jpg";
 import falcon from "../img/falcon.png";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -10,8 +10,14 @@ import { authContext } from "../context/authContex";
 export const Register = () => {
   const navigate = useNavigate();
   const { currentUser, creatingUser, updatingUser } = useContext(authContext);
-  console.log(currentUser);
-  if(!currentUser==={}) navigate('/');
+  // console.log(currentUser);
+
+  useEffect(() => {
+    if(currentUser){
+      alert("LogOut to Register for New Account");
+      navigate("/");
+    }
+  },[currentUser]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +25,7 @@ export const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
-
+ 
     try {
       const response = await creatingUser(email, password);
       console.log("Account Created Successfully");

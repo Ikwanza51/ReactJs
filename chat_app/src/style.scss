@@ -126,13 +126,14 @@
             font-size: 15px;
             font-style: italic;
           }
+
         }
 
         .profileinfo {
           flex: 2;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: right;
 
           img {
             height: 20%;
@@ -149,8 +150,8 @@
           }
         }
 
-        button {
-          margin-right: 5%;
+        .logout {
+          margin: 5%;
           letter-spacing: 2px;
           background-color: black;
           color: white;

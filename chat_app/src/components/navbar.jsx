@@ -1,21 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import favicon from "../img/falcon.png";
 import { authContext } from "../context/authContex";
 import { useNavigate } from "react-router";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
   const { currentUser,loggingOut } = useContext(authContext);
   const navigate = useNavigate();
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     try{
+      console.log("Logging out");
       await loggingOut();
-      console.log('logged out');
+      console.log('Logged out');
+      console.log("NAvbar:- ");
       console.log(currentUser);
       navigate("/login");
     }catch(e){
-      console.log("Error occurred while Signing in");
-      console.log(e);
+      console.log("Error occurred while Logging Out");
     }
   };
 
@@ -33,12 +35,7 @@ const Navbar = () => {
         <img src={currentUser.photoURL} alt="profilelogo" />
         <p className="profilename">{currentUser.displayName}</p>
       </div>
-      <button
-        onClick={handleSubmit}
-        className="logout"
-      >
-        Log Out
-      </button>
+      <LogoutIcon onClick={handleSubmit} className="logout"></LogoutIcon>
     </div>
   );
 };

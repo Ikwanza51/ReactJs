@@ -11,15 +11,16 @@ import { auth } from "../firebase";
 export const authContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState({});
-  // const [changed, setChanged] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const creatingUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
+  
   const loggingIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
+  
   const loggingOut = () => {
     return signOut(auth);
   };
@@ -34,18 +35,17 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const authstate = async () => {
       await onAuthStateChanged(auth, (user) => {
-        if (user) {
           setCurrentUser(user);
-          console.log("Auth state changed :- User Logged In");
+          console.log("Auth state changing");
           console.log(user);
-        }
+          console.log("Auth state changed");
       });
     };
 
     return () => {
       authstate();
     };
-  });
+  },[currentUser]);
 
   return (
     <authContext.Provider
