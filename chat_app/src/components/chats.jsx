@@ -6,20 +6,23 @@ import { db } from "../firebase";
 const Chats = () => {
   const { currentUser } = useContext(authContext);
   const [chats, setChats] = useState(null);
-  // const [loading,setloading] = useState(false);
 
   useEffect(() => {
-    const getusers = async() =>{
-      await onSnapshot(doc(db, "chats", currentUser.uid), (doc) => {
+    const getusers = () =>{
+      onSnapshot(doc(db, "chats", currentUser.uid), (doc) => {
         setChats(doc.data());
-        // chats && setloading(true);
-        console.log("Chats effect");
-    });
+        // console.log("Chats effect");
+      });
+      
+      const delayedOperation = async() => {
+        await new Promise(resolve => setTimeout(resolve, 10000)); // 2 seconds delay
+        // console.log("Chats Refreshed");
+      }
+      delayedOperation();
   }
 
     return () => {
-      console.log(currentUser);
-      currentUser && currentUser.uid && getusers();
+      currentUser && getusers();
     };
   }, [currentUser,chats]);
 

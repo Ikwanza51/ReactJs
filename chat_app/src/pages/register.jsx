@@ -12,13 +12,6 @@ export const Register = () => {
   const { currentUser, creatingUser, updatingUser } = useContext(authContext);
   // console.log(currentUser);
 
-  useEffect(() => {
-    if(currentUser){
-      alert("LogOut to Register for New Account");
-      navigate("/");
-    }
-  },[currentUser]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const name = e.target[0].value;

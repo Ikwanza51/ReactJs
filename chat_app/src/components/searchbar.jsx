@@ -15,151 +15,117 @@ import { authContext } from "../context/authContex";
 
 const Searchbar = () => {
   const [searchUser, setSearchUser] = useState("");
-  const [users, setUser] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [users, setUser] = useState(null);
   const { currentUser } = useContext(authContext);
 
-  const handleSearch = async () => {
+  const handleSearch = async () => {    // Getting user from Search Keyword
     try {
       const querySnapshot = await getDocs(
         query(collection(db, "users"), where("displayName", "==", searchUser))
       );
 
-      // console.log(querySnapshot.docs);
-
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         setUser(doc.data());
         console.log(users);
-        setLoading(true);
       });
-
       console.log("Query Success");
     } catch (e) {
-      console.log("Error while querying");
+      console.log("Error while Querying");
     }
   };
 
-  const handleKey = (e) => {
+  const handleKey = (e) => {    //Handle Enter Key
     if (e.code === "Enter") {
       console.log("Enter Pressed");
       handleSearch();
     }
   };
 
-  const handleSelect = async () => {
-    console.log("New User Selected");
-    const combinedId =
-      currentUser.uid > users.uid
-        ? currentUser.uid + users.uid
-        : users.uid + currentUser.uid;
-    console.log(combinedId);
+  const checkDocPresent= async (collectionName,docName) =>{
+    const docRef = doc(db, collectionName, docName);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {     //if Exists already
+      console.log("Document Found : ", docSnap.data());
+      return true;
+    }else{
+      console.log("No Document Found");
+      return false
+    } ;
+  }
+
+  const createAndUpdateChatRoom= async (user1,user2,combinedId) =>{
+    const ChatRoomRef = collection(db, "chatroom");
+
+    await setDoc(doc(ChatRoomRef, combinedId), {
+      messages: arrayUnion({
+          from: user1.displayName,
+          fromPhoto: user1.photoURL,
+          to: user2.displayName,
+          toPhoto: user2.photoURL,
+          message: "Hello",
+      }),
+    });
+    console.log(
+      "Created/Updated ChatRoom of "+user1.displayName + " and " + user2.displayName
+    );
+  }
+
+  const createandUpdateChats= async (user1,user2,combinedId) =>{
+    let checkDocument = await checkDocPresent("chats",user1.uid)
+    const chatsRef = collection(db, "chats");
+    if(checkDocument){
+        await updateDoc(doc(chatsRef, user1.uid), {
+            users: arrayUnion({
+              chatroomid: combinedId,
+              displayName: user2.displayName,
+              photoURL: user2.photoURL,
+              latesmessage: "Hello",
+            }),
+        });
+        console.log(
+          user1.displayName +
+            " Chat Updated with " +
+            user2.displayName
+        );
+    }else{
+        await setDoc(doc(chatsRef, user1.uid), {
+          users: [{
+            chatroomid: combinedId,
+            displayName: user2.displayName,
+            photoURL: user2.photoURL,
+            latesmessage: "Hello",
+          }],
+        });
+        console.log(
+          user1.displayName +
+            " Chat Created with " +
+            user2.displayName
+        );
+    }
+  }
+
+  const handleSelect = async (user) => {      //Creating Chats with the Selected User
+    console.log(user.displayName + " selected");
+    const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;     //setting Chatroom ID
 
     try {
+        let chatroombool = await checkDocPresent("chatroom",combinedId);
+        if(chatroombool){    //Checking Whether Chatroom between the current user and user selected
+            console.log("ChatRoom Exits between " + currentUser.displayName + " and " + user.displayName);
+        } 
+        else {
+            createAndUpdateChatRoom(currentUser,user,combinedId);    // Creating ChatRoom for the current user with selected user
 
-      //Checking Whether room between the current user and user present
-      const docRef = doc(db, "chatroom", combinedId);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        //if Exists already
-        console.log("Document data:", docSnap.data());
-        setLoading(false);
-      } else {
-        //if not exists
-        console.log("No Room Found!");
-        const RoomRef = collection(db, "chatroom");
-
-        //room created
-        await setDoc(doc(RoomRef, combinedId), {
-          messages: [
-            {
-              from: currentUser.displayName,
-              fromPhoto: currentUser.photoURL,
-              to: users.displayName,
-              toPhoto: users.photoURL,
-              message: "",
-            },
-          ],
-        });
-
-        console.log(
-          currentUser.displayName + " Initiated Room with " + users.displayName
-        );
-
-        // Creating ChatRoom1 for the current user with selected user
-        const chatRef = doc(db, "chats", currentUser.uid);
-        const chatSnap = await getDoc(chatRef);
-
-        if (chatSnap.exists()) {
-          console.log("Chats already exist");
-          const chatsRef = collection(db, "chats");
-
-          await updateDoc(doc(chatsRef, currentUser.uid), {
-            users: arrayUnion({
-              chatroomid: combinedId,
-              displayName: users.displayName,
-              photoURL: users.photoURL,
-              latesmessage: "Hello",
-            }),
-          });
-          console.log(
-            currentUser.displayName +
-              " Chat with " +
-              users.displayName +
-              " Created"
-          );
-
-          await updateDoc(doc(chatsRef, users.uid), {
-            users: arrayUnion({
-              chatroomid: combinedId,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-              latesmessage: "Hello",
-            }),
-          });
-          console.log(
-            users.displayName +
-              " Chat with " +
-              currentUser.displayName +
-              " Created"
-          );
-        } else {
-          console.log("No Room Found!");
-          const chatsRef = collection(db, "chats");
-
-          await setDoc(doc(chatsRef, currentUser.uid), {
-            users: [
-              {
-                chatroomid: combinedId,
-                displayName: users.displayName,
-                photoURL: users.photoURL,
-                latesmessage: "Hello",
-              },
-            ],
-          });
-          console.log(currentUser.displayName + " Chats Created");
-
-          await setDoc(doc(chatsRef, users.uid), {
-            users: [
-              {
-                chatroomid: combinedId,
-                displayName: currentUser.displayName,
-                photoURL: currentUser.photoURL,
-                latesmessage: "Hello",
-              },
-            ],
-          });
-          console.log(users.displayName + " Chats Created");
-          setLoading(false);
+            console.log("Creating Chats for both user for the First Time between them");
+            createandUpdateChats(currentUser,user,combinedId);     // Creating Chats for the current user with selected user
+            createandUpdateChats(user,currentUser,combinedId);     // Creating Chats for the selected user with current user
         }
-      }
-    } catch (e) {
+    }catch (e) {
       console.log(
-        "Error while creating new Chat Room of " +
+        "Error while creating new ChatRoom of " +
           currentUser.displayName +
           " " +
-          users.displayName
+          user.displayName
       );
     }
   };
@@ -174,14 +140,13 @@ const Searchbar = () => {
           onChange={(e) => {
             setSearchUser(e.target.value);
             if (e.target.value === "") {
-              setUser({});
-              setLoading(false);
+              setUser(null);
             }
           }}
         />
       </div>
-      {loading && (
-        <div className="userSearched" onClick={handleSelect}>
+      {users && (
+        <div className="userSearched" onClick={() => handleSelect(users)}>
           <img src={users.photoURL} alt="dp" />
           <div className="userChatinfo">
             <span>{users.displayName}</span>
