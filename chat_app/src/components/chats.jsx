@@ -2,29 +2,25 @@ import React, { useContext, useEffect, useState } from "react";
 import { authContext } from "../context/authContex";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
+// import { chatContext } from "../context/chatContext";
 
 const Chats = () => {
   const { currentUser } = useContext(authContext);
+  // const { chatUser } = useContext(chatContext);
   const [chats, setChats] = useState(null);
 
   useEffect(() => {
     const getusers = () =>{
       onSnapshot(doc(db, "chats", currentUser.uid), (doc) => {
         setChats(doc.data());
-        // console.log("Chats effect");
+        console.log("Chats effect");
       });
-      
-      const delayedOperation = async() => {
-        await new Promise(resolve => setTimeout(resolve, 10000)); // 2 seconds delay
-        // console.log("Chats Refreshed");
-      }
-      delayedOperation();
   }
 
     return () => {
       currentUser && getusers();
     };
-  }, [currentUser,chats]);
+  }, [currentUser]);
 
   return (
     <div className="chats">

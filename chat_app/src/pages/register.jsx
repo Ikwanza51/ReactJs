@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import avatar from "../img/avatar.jpg";
 import falcon from "../img/falcon.png";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ export const Register = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
     const file = e.target[3].files[0];
- 
+
     try {
       const response = await creatingUser(email, password);
       console.log("Account Created Successfully");
